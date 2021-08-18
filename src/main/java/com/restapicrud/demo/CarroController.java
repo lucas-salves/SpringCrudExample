@@ -2,19 +2,22 @@ package com.restapicrud.demo;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 
 @RestController
-@AllArgsConstructor
-public class CarroController {
 
+public class CarroController {
+	
+	@Autowired
 	CarroRepository repository;
 	
 	@GetMapping("/carro")
@@ -24,9 +27,10 @@ public class CarroController {
 	
 	@GetMapping("/carro/{id}")
 	public Carro getCarroById(@PathVariable Long id) {
-		return repository.getOne(id);
+		return repository.findById(id).get();
 	}
 	
+//	@RequestMapping(value ="/carro", method = RequestMethod.POST)
 	@PostMapping("/carro")
 	public Carro saveCarro(@RequestBody Carro carro) {
 		return repository.save(carro);
